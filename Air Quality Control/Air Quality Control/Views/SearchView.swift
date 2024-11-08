@@ -8,10 +8,13 @@
 import SwiftUI
 
 struct SearchView: View {
+    @State private var searchText = ""
     var body: some View {
-        VStack {
-            Text("WHY SO SERIOUS???")
+        NavigationStack {
+            Text(searchText == "" ? "" : "Searching for \(searchText)...")
+            .navigationTitle("Search for a city!")
         }
+        .searchable(text: $searchText)
         .customBackButton()
     }
 }
