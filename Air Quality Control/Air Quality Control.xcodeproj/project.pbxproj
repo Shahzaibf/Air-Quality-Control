@@ -24,9 +24,9 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		EF5FA7562CDC0CFC00570717 /* Air Quality Control.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Air Quality Control.app"; sourceTree = BUILT_PRODUCTS_DIR; };
-		EF5FA7672CDC0CFE00570717 /* Air Quality ControlTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Air Quality ControlTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
-		EF5FA7712CDC0CFE00570717 /* Air Quality ControlUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Air Quality ControlUITests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
+		EF5FA7F22CDEA97000570717 /* Air Quality Control.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Air Quality Control.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		EF5FA7F32CDEA97000570717 /* Air Quality ControlTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Air Quality ControlTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
+		EF5FA7F42CDEA97000570717 /* Air Quality ControlUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Air Quality ControlUITests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
@@ -78,18 +78,10 @@
 				EF5FA7582CDC0CFC00570717 /* Air Quality Control */,
 				EF5FA76A2CDC0CFE00570717 /* Air Quality ControlTests */,
 				EF5FA7742CDC0CFE00570717 /* Air Quality ControlUITests */,
-				EF5FA7572CDC0CFC00570717 /* Products */,
+				EF5FA7F22CDEA97000570717 /* Air Quality Control.app */,
+				EF5FA7F32CDEA97000570717 /* Air Quality ControlTests.xctest */,
+				EF5FA7F42CDEA97000570717 /* Air Quality ControlUITests.xctest */,
 			);
-			sourceTree = "<group>";
-		};
-		EF5FA7572CDC0CFC00570717 /* Products */ = {
-			isa = PBXGroup;
-			children = (
-				EF5FA7562CDC0CFC00570717 /* Air Quality Control.app */,
-				EF5FA7672CDC0CFE00570717 /* Air Quality ControlTests.xctest */,
-				EF5FA7712CDC0CFE00570717 /* Air Quality ControlUITests.xctest */,
-			);
-			name = Products;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -114,7 +106,7 @@
 			packageProductDependencies = (
 			);
 			productName = "Air Quality Control";
-			productReference = EF5FA7562CDC0CFC00570717 /* Air Quality Control.app */;
+			productReference = EF5FA7F22CDEA97000570717 /* Air Quality Control.app */;
 			productType = "com.apple.product-type.application";
 		};
 		EF5FA7662CDC0CFE00570717 /* Air Quality ControlTests */ = {
@@ -137,7 +129,7 @@
 			packageProductDependencies = (
 			);
 			productName = "Air Quality ControlTests";
-			productReference = EF5FA7672CDC0CFE00570717 /* Air Quality ControlTests.xctest */;
+			productReference = EF5FA7F32CDEA97000570717 /* Air Quality ControlTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
 		EF5FA7702CDC0CFE00570717 /* Air Quality ControlUITests */ = {
@@ -160,7 +152,7 @@
 			packageProductDependencies = (
 			);
 			productName = "Air Quality ControlUITests";
-			productReference = EF5FA7712CDC0CFE00570717 /* Air Quality ControlUITests.xctest */;
+			productReference = EF5FA7F42CDEA97000570717 /* Air Quality ControlUITests.xctest */;
 			productType = "com.apple.product-type.bundle.ui-testing";
 		};
 /* End PBXNativeTarget section */
@@ -196,7 +188,7 @@
 			mainGroup = EF5FA74D2CDC0CFC00570717;
 			minimizedProjectReferenceProxies = 1;
 			preferredProjectObjectVersion = 77;
-			productRefGroup = EF5FA7572CDC0CFC00570717 /* Products */;
+			productRefGroup = EF5FA74D2CDC0CFC00570717;
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
