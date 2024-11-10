@@ -11,6 +11,7 @@ import CoreLocationUI
 struct HomePageView: View {
     @StateObject private var locationManager = LocationManager()
     @State private var location: String = ""
+    @State private var showLocation: Bool = false
     var body: some View {
         NavigationView {
             VStack {
@@ -46,6 +47,7 @@ struct HomePageView: View {
                 HStack {
                     LocationButton(.currentLocation) {
                         print("Clicked")
+                        showLocation = true
                         locationManager.requestLocation()
                     }
                     .padding(.leading)
@@ -67,7 +69,7 @@ struct HomePageView: View {
                     .buttonStyle(PurpleButton())
                 }
                 .padding(.bottom)
-                if let location = locationManager.location {
+                if showLocation, let location = locationManager.location {
                     Text("Latitude: \(location.coordinate.latitude), Longitude: \(location.coordinate.longitude)")
                         .font(.custom("Times New Roman", size: 16))
                         .padding()
