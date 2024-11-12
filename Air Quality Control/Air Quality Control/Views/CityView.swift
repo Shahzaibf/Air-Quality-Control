@@ -13,19 +13,14 @@ struct CityView: View {
     private var circleColor: Color {
         switch quality {
         case 1:
-            tip = "Hazardous: The air quality is dangerous. Avoid all outdoor activities, close all windows, and consider using an air purifier if possible. Health impacts are likely for everyone."
             return .red
         case 2:
-            tip = "Very Unhealthy: The air quality poses a serious health risk. Limit time outside, wear a mask if necessary, and avoid physical exertion outdoors. Sensitive groups may experience severe health issues."
             return .orange
         case 3:
-            tip = "Unhealthy: The air quality is concerning. If you have a respiratory condition, stay indoors or wear a protective mask. Outdoor activities should be minimized, especially for children and elderly."
             return .yellow
         case 4:
-            tip = "Moderate: Air quality is acceptable, but for some pollutants, there may be a moderate health concern. People who are unusually sensitive should consider limiting prolonged outdoor exertion."
             return Color(red: 0.5, green: 0.8392, blue: 0.5)
         case 5:
-            tip = "Good: The air quality is ideal for outdoor activities. Feel free to enjoy the fresh air, as there is little or no risk to health."
             return .green
         default:
             return .gray
@@ -74,5 +69,5 @@ struct CityView: View {
     }
 }
 #Preview {
-    CityView(quality: 1)
+    CityView(quality: 4)
 }

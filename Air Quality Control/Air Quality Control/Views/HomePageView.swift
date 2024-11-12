@@ -44,28 +44,25 @@ struct HomePageView: View {
                         .custom("Times New Roman", size: 20)
                     )
                     .padding(.bottom)
-                HStack {
+                VStack(alignment: .center) {
                     LocationButton(.currentLocation) {
                         print("Clicked")
                         showLocation = true
                         locationManager.requestLocation()
                     }
-                    .padding(.leading)
                     .foregroundColor(.white)
                     .cornerRadius(10)
                     .tint(.purple)
-                    Spacer()
-                    Text("or")
+                    
+                    Text("OR")
                     .font(
                         .custom("Times New Roman", size: 20)
                     )
-                    Spacer()
                     NavigationLink(destination: SearchView()) {
                         HStack {
                             Text("Search")
                         }
                     }
-                    .padding(.trailing)
                     .buttonStyle(PurpleButton())
                 }
                 .padding(.bottom)
