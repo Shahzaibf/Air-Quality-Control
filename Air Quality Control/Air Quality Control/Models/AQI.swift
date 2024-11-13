@@ -10,8 +10,13 @@ import Foundation
 
 struct AQIResponse : Codable {
     let list: [AQIList]
-    let coord: [Double]
+    let coord: Coord
     let location: String?
+}
+
+struct Coord : Codable {
+    let lon: Double
+    let lat: Double
 }
 
 struct AQIList : Codable {
@@ -30,7 +35,7 @@ struct AQIComponents : Codable {
     let no2: Float
     let o3: Float
     let so2: Float
-    let pm2_5: Float
+    let pm25: Float
     let pm10: Float
     let nh3: Float
 }
