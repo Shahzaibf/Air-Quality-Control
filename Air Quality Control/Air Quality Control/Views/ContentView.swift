@@ -8,7 +8,6 @@
 import SwiftUI
 
 struct ContentView: View {
-    @State private var selectedTab = 9
     var body: some View {
         HomePageView()
     }

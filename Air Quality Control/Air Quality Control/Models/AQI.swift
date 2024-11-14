@@ -11,7 +11,7 @@ import Foundation
 struct AQIResponse : Codable {
     let list: [AQIList]
     let coord: Coord
-    let location: String?
+    var location: String?
 }
 
 struct Coord : Codable {
