@@ -10,6 +10,9 @@ import SwiftUI
 struct SearchView: View {
     @State private var searchText = ""
     @State private var cities = [City]()
+    @State private var AirQuality: AQIResponse?
+    @State private var selectedCity: City?
+    @State private var navigateToDetails: Bool = false
     
     private func fetchAllCities() async throws {
         do {
@@ -29,31 +32,57 @@ struct SearchView: View {
             print("Unexpected error: \(error)")
         }
     }
+    private func fetchAirQuality(city: City) async throws {
+        do {
+            let result = try await fetchAQI(lat: city.lat, lon: city.lon)
+            print("API recieved: \(result)")
+            await MainActor.run {
+                self.AirQuality = result
+                self.AirQuality?.location = city.name
+                self.selectedCity = city
+                self.navigateToDetails = true
+            }
+        } catch APIError.invalidURL {
+            print("Invalid URL error")
+        } catch APIError.invalidResponse {
+            print("Invalid response from server")
+        }
+    }
     var body: some View {
         NavigationStack {
             VStack {
                 if (searchText.count == 0) {
                     Text("")
-                } else if (searchText.count < 4) {
-                    Text("Please enter at least 4 characters for search.")
+                } else if (searchText.count < 3) {
+                    Text("Please enter at least 3 characters for search.")
                 } else {
                     List(cities, id: \.name) { city in
-                        Text(city.name)
+                        Button {
+                            Task {
+                                try await fetchAirQuality(city: city)
+                            }
+                        } label : {
+                            Text(city.name)
+                        }
                     }
                 }
             }
             .navigationTitle("Search for a city!")
             .navigationBarTitleDisplayMode(.inline)
             .onChange(of: searchText) { newValue in
-                if newValue.count >= 4 {
+                if newValue.count >= 3 {
                     Task {
                         try await fetchAllCities()
                     }
                 }
             }
+            NavigationLink(destination: CityView(airQuality: AirQuality), isActive: $navigateToDetails) {
+                EmptyView()
+            }
         }
         .searchable(text: $searchText)
         .customBackButton()
+        
     }
 }
 

@@ -9,7 +9,22 @@ import SwiftUI
 
 struct CityView: View {
     let airQuality: AQIResponse?
-    @State private var tip: String = ""
+    private var tip: String {
+    switch airQuality?.list.first?.main.aqi {
+        case 5:
+            return "Hazardous: The air quality is dangerous. Avoid all outdoor activities, close all windows, and consider using an air purifier if possible. Health impacts are likely for everyone."
+        case 4:
+            return "Very Unhealthy: The air quality poses a serious health risk. Limit time outside, wear a mask if necessary, and avoid physical exertion outdoors. Sensitive groups may experience severe health issues."
+        case 3:
+            return "Unhealthy: The air quality is concerning. If you have a respiratory condition, stay indoors or wear a protective mask. Outdoor activities should be minimized, especially for children and elderly."
+        case 2:
+            return "Moderate: Air quality is acceptable, but for some pollutants, there may be a moderate health concern. People who are unusually sensitive should consider limiting prolonged outdoor exertion."
+        case 1:
+            return "Good: The air quality is ideal for outdoor activities. Feel free to enjoy the fresh air, as there is little or no risk to health."
+        default:
+            return "No data available for this air quality level. Stay informed and check updates on air quality in your area."
+        }
+    }
     private var circleColor: Color {
         switch airQuality?.list.first?.main.aqi {
         case 5:
@@ -33,6 +48,7 @@ struct CityView: View {
                 .font(
                     .custom("Times New Roman", size: 36)
                 )
+                .multilineTextAlignment(.center)
                 .padding(.top)
             ZStack {
                 Circle()
@@ -49,20 +65,6 @@ struct CityView: View {
             .padding(.top)
             .onAppear {
                 animate = true
-                switch airQuality?.list.first?.main.aqi {
-                case 5:
-                    tip = "Hazardous: The air quality is dangerous. Avoid all outdoor activities, close all windows, and consider using an air purifier if possible. Health impacts are likely for everyone."
-                case 4:
-                    tip = "Very Unhealthy: The air quality poses a serious health risk. Limit time outside, wear a mask if necessary, and avoid physical exertion outdoors. Sensitive groups may experience severe health issues."
-                case 3:
-                    tip = "Unhealthy: The air quality is concerning. If you have a respiratory condition, stay indoors or wear a protective mask. Outdoor activities should be minimized, especially for children and elderly."
-                case 2:
-                    tip = "Moderate: Air quality is acceptable, but for some pollutants, there may be a moderate health concern. People who are unusually sensitive should consider limiting prolonged outdoor exertion."
-                case 1:
-                    tip = "Good: The air quality is ideal for outdoor activities. Feel free to enjoy the fresh air, as there is little or no risk to health."
-                default:
-                    tip = "No data available for this air quality level. Stay informed and check updates on air quality in your area."
-                }
             }
             Text(tip)
                 .font(
