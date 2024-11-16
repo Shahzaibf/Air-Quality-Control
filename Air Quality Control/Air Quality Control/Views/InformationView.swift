@@ -32,7 +32,6 @@ struct InformationView: View {
             .padding(.leading, 10)
             Spacer()
         }
-        .customBackButton()
     }
 }
 

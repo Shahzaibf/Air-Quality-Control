@@ -112,6 +112,7 @@ struct HomePageView: View {
                 }
             }
         }
+        .navigationTitle("Home")
     }
 }
 

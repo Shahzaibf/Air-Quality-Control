@@ -67,7 +67,7 @@ struct SearchView: View {
                     }
                 }
             }
-            .navigationTitle("Search for a city!")
+            .navigationTitle("Search")
             .navigationBarTitleDisplayMode(.inline)
             .onChange(of: searchText) { newValue in
                 if newValue.count >= 3 {

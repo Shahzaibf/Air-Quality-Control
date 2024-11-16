@@ -9,6 +9,7 @@ import SwiftUI
 
 struct CityView: View {
     let airQuality: AQIResponse?
+    
     private var tip: String {
     switch airQuality?.list.first?.main.aqi {
         case 5:
@@ -84,6 +85,5 @@ struct CityView: View {
                     .multilineTextAlignment(.center)
             }
         }
-        .customBackButton()
     }
 }
