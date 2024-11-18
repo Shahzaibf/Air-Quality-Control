@@ -84,6 +84,7 @@ struct CityView: View {
                     .padding(.bottom)
                     .multilineTextAlignment(.center)
             }
+            
         }
     }
 }

@@ -20,7 +20,9 @@ struct SearchView: View {
             let result = try await fetchCities(search: searchText)
             print("API recieved: \(result)")
             await MainActor.run {
-                self.cities = result
+                self.cities = Array(Set(result.map { $0.name })).map { name in
+                    result.first { $0.name == name }!
+                }
             }
         } catch APIError.invalidURL {
             print("Invalid URL error")
