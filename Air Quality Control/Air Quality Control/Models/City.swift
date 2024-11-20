@@ -7,8 +7,10 @@
 
 import Foundation
 
-struct City : Codable {
+struct City : Codable, Hashable {
     let name: String
     let lat: Double
     let lon: Double
+    let country: String
+    let state: String?
 }

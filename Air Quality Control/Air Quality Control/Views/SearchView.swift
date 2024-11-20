@@ -20,9 +20,7 @@ struct SearchView: View {
             let result = try await fetchCities(search: searchText)
             print("API recieved: \(result)")
             await MainActor.run {
-                self.cities = Array(Set(result.map { $0.name })).map { name in
-                    result.first { $0.name == name }!
-                }
+                self.cities = result
             }
         } catch APIError.invalidURL {
             print("Invalid URL error")
@@ -58,13 +56,14 @@ struct SearchView: View {
                 } else if (searchText.count < 3) {
                     Text("Please enter at least 3 characters for search.")
                 } else {
-                    List(cities, id: \.name) { city in
+                    List(cities, id: \.self) { city in
                         Button {
                             Task {
                                 try await fetchAirQuality(city: city)
                             }
                         } label : {
-                            Text(city.name)
+                            let state = city.state != nil ? ", \(city.state!)" : ""
+                            Text("\(city.name), \(city.country)\(state)")
                         }
                     }
                 }
