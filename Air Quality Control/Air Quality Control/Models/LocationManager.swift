@@ -26,23 +26,39 @@ class LocationManager: NSObject, ObservableObject, CLLocationManagerDelegate {
         } else {
             locationManager.requestAlwaysAuthorization()
         }
+        locationManager.requestLocation()
     }
+    
+    
     
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         guard let newLocation = locations.last else { return }
-        location = newLocation
-        locationUpdated = true
+        DispatchQueue.main.async {
+            self.location = newLocation
+            self.locationUpdated = true
+        }
     }
     
     func locationManager(_ manager: CLLocationManager, didChangeAuthorization status: CLAuthorizationStatus) {
-        locationStatus = status
-        if status == .authorizedWhenInUse || status == .authorizedAlways {
-            locationManager.requestLocation()
+        DispatchQueue.main.async {
+            self.locationStatus = status
+            switch status {
+                case .authorizedWhenInUse, .authorizedAlways:
+                    self.locationManager.requestLocation()
+                case .denied:
+                    print("Location permission denied. Please enable it in Settings.")
+                case .restricted:
+                    print("Location permission restricted. You may not have access to location services.")
+                case .notDetermined:
+                    print("Location permission not determined. Requesting authorization.")
+                @unknown default:
+                    print("Unknown authorization status.")
+            }
         }
     }
     
     func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
-            print("Location manager failed with error: \(error)")
+            print("Location manager failed with error: \(error.localizedDescription)")
     }
     
 }

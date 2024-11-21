@@ -29,9 +29,22 @@
 		EF5FA7F42CDEA97000570717 /* Air Quality ControlUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Air Quality ControlUITests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
+/* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
+		EF11FE532CEFF8870016F303 /* Exceptions for "Air Quality Control" folder in "Air Quality Control" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				"Air-Quality-Control-Info.plist",
+			);
+			target = EF5FA7552CDC0CFC00570717 /* Air Quality Control */;
+		};
+/* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
+
 /* Begin PBXFileSystemSynchronizedRootGroup section */
 		EF5FA7582CDC0CFC00570717 /* Air Quality Control */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
+			exceptions = (
+				EF11FE532CEFF8870016F303 /* Exceptions for "Air Quality Control" folder in "Air Quality Control" target */,
+			);
 			path = "Air Quality Control";
 			sourceTree = "<group>";
 		};
@@ -386,6 +399,7 @@
 				DEVELOPMENT_ASSET_PATHS = "\"Air Quality Control/Preview Content\"";
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "Air-Quality-Control-Info.plist";
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphoneos*]" = YES;
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphonesimulator*]" = YES;
 				"INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents[sdk=iphoneos*]" = YES;
@@ -423,6 +437,7 @@
 				DEVELOPMENT_ASSET_PATHS = "\"Air Quality Control/Preview Content\"";
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "Air-Quality-Control-Info.plist";
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphoneos*]" = YES;
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphonesimulator*]" = YES;
 				"INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents[sdk=iphoneos*]" = YES;
