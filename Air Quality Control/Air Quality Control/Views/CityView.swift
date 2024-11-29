@@ -9,6 +9,7 @@ import SwiftUI
 
 struct CityView: View {
     let airQuality: AQIResponse?
+    let currCity: City
     @Environment(FavoriteStore.self) var favorites
     
     private var tip: String {
@@ -46,6 +47,7 @@ struct CityView: View {
     @State private var animate = false
     var body: some View {
         VStack {
+            //let _ = print("CITY VALUE: \(currCity)")
             Text("\(airQuality?.location ?? "Unknown Location")")
                 .font(
                     .custom("Times New Roman", size: 36)
@@ -75,6 +77,16 @@ struct CityView: View {
                 .foregroundColor(.primary)
                 .multilineTextAlignment(.center)
                 .padding([.top, .leading, .trailing])
+            Button(favorites.contains(currCity) ? "Remove from Favorites" : "Add to Favorites") {
+                if favorites.contains(currCity) {
+                    favorites.remove(currCity)
+                } else {
+                    favorites.add(currCity)
+                }
+            }
+            .buttonStyle(.borderedProminent)
+            .padding()
+            
             Spacer()
             
             HStack {

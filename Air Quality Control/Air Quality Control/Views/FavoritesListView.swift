@@ -8,11 +8,78 @@
 import SwiftUI
 
 struct FavoritesListView: View {
+    @Environment(FavoriteStore.self) var favorites
+    @State private var cities = [City]()
+    @State private var currentCity: City?
+    @State private var AirQuality: AQIResponse?
+    @State private var navigateToDetails: Bool = false
+    
+    private func fetchAirQuality(city: City) async throws {
+        do {
+            let result = try await fetchAQI(lat: city.lat, lon: city.lon)
+            print("API recieved: \(result)")
+            await MainActor.run {
+                self.AirQuality = result
+                self.AirQuality?.location = city.name
+                self.navigateToDetails = true
+            }
+        } catch APIError.invalidURL {
+            print("Invalid URL error")
+        } catch APIError.invalidResponse {
+            print("Invalid response from server")
+        }
+    }
+    private func deleteCity(at offsets: IndexSet) {
+        for index in offsets {
+            let city = cities[index]
+            favorites.remove(city)
+        }
+        cities = favorites.allFavorites()
+    }
+    
     var body: some View {
         VStack {
-            Text("Favorites")
+            if cities.isEmpty {
+                Text("Search some cities and add them to favorites!")
+                    .font(
+                        .custom("Times New Roman", size: 18)
+                    )
+                    .multilineTextAlignment(.center)
+                    .padding(.top)
+                Spacer()
+            } else {
+                Text("Favorites:")
+                    .font(
+                        .custom("Times New Roman", size: 18)
+                    )
+                List {
+                    ForEach(cities, id: \.self) { city in
+                        Button {
+                            currentCity = city
+                            Task {
+                                try await fetchAirQuality(city: city)
+                            }
+                        } label : {
+                            let state = city.state != nil ? ", \(city.state!)" : ""
+                            Text("\(city.name), \(city.country)\(state)")
+                        }
+                    }
+                    .onDelete(perform: deleteCity)
+                }
+            }
+        }
+        .toolbar {
+            if !cities.isEmpty {
+                EditButton()
+            }
         }
         .customBackButton()
+        .onAppear() {
+            cities = favorites.allFavorites()
+        }
+        NavigationLink(destination: CityView(airQuality: AirQuality, currCity: currentCity ?? City.defaultCity), isActive: $navigateToDetails) {
+            EmptyView()
+        }
     }
 }
 

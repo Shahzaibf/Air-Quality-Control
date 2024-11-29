@@ -90,7 +90,6 @@ struct HomePageView: View {
                         .font(
                             .custom("Times New Roman", size: 20)
                         )
-                        .multilineTextAlignment(.center)
                         .padding(.top)
                         .multilineTextAlignment(.center)
                         .lineLimit(nil)

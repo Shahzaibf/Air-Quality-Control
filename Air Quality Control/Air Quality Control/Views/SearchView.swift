@@ -11,8 +11,8 @@ struct SearchView: View {
     @State private var searchText = ""
     @State private var cities = [City]()
     @State private var AirQuality: AQIResponse?
-    @State private var selectedCity: City?
     @State private var navigateToDetails: Bool = false
+    @State private var currentCity: City?
     
     private func fetchAllCities() async throws {
         do {
@@ -39,7 +39,6 @@ struct SearchView: View {
             await MainActor.run {
                 self.AirQuality = result
                 self.AirQuality?.location = city.name
-                self.selectedCity = city
                 self.navigateToDetails = true
             }
         } catch APIError.invalidURL {
@@ -58,6 +57,7 @@ struct SearchView: View {
                 } else {
                     List(cities, id: \.self) { city in
                         Button {
+                            currentCity = city
                             Task {
                                 try await fetchAirQuality(city: city)
                             }
@@ -77,7 +77,7 @@ struct SearchView: View {
                     }
                 }
             }
-            NavigationLink(destination: CityView(airQuality: AirQuality), isActive: $navigateToDetails) {
+            NavigationLink(destination: CityView(airQuality: AirQuality, currCity: currentCity ?? City.defaultCity), isActive: $navigateToDetails) {
                 EmptyView()
             }
         }

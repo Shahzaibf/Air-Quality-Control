@@ -10,7 +10,7 @@ import SwiftUI
 
 @Observable
 class FavoriteStore {
-    @AppStorage("Favories") private var favoritesData: String = ""
+    @ObservationIgnored @AppStorage("Favories") private var favoritesData: String = ""
     private var cities: Set<City> = []
     private let key = "Favorites"
     
