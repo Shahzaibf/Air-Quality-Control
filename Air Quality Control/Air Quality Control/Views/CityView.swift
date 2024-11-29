@@ -9,6 +9,7 @@ import SwiftUI
 
 struct CityView: View {
     let airQuality: AQIResponse?
+    @Environment(FavoriteStore.self) var favorites
     
     private var tip: String {
     switch airQuality?.list.first?.main.aqi {
@@ -84,7 +85,6 @@ struct CityView: View {
                     .padding(.bottom)
                     .multilineTextAlignment(.center)
             }
-            
         }
     }
 }

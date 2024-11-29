@@ -15,6 +15,7 @@ struct HomePageView: View {
     @State private var animate = false
     @State private var circleColor: Color = .gray
     @State private var tip: String = ""
+    @State private var favorites = FavoriteStore()
     
     
     private func fetchAirQuality() async throws {
@@ -56,7 +57,7 @@ struct HomePageView: View {
             case 1:
                 return .green
             default:
-                return .gray
+                return .white
             }
         }
     
@@ -178,7 +179,9 @@ struct HomePageView: View {
                 }
             }
         }
+        .environment(favorites)
     }
+    
 }
 
 
