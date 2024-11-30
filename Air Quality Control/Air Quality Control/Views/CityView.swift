@@ -68,7 +68,9 @@ struct CityView: View {
             }
             .padding(.top)
             .onAppear {
-                animate = true
+                withAnimation {
+                    animate.toggle()
+                }
             }
             Text(tip)
                 .font(

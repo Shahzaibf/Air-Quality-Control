@@ -13,6 +13,7 @@ struct SearchView: View {
     @State private var AirQuality: AQIResponse?
     @State private var navigateToDetails: Bool = false
     @State private var currentCity: City?
+    @Environment(FavoriteStore.self) var favorites
     
     private func fetchAllCities() async throws {
         do {
@@ -62,8 +63,17 @@ struct SearchView: View {
                                 try await fetchAirQuality(city: city)
                             }
                         } label : {
-                            let state = city.state != nil ? ", \(city.state!)" : ""
-                            Text("\(city.name), \(city.country)\(state)")
+                            HStack {
+                                let state = city.state != nil ? ", \(city.state!)" : ""
+                                Text("\(city.name), \(city.country)\(state)")
+                                
+                                if favorites.contains(city) {
+                                    Spacer()
+                                    Image(systemName: "heart.fill")
+                                    .accessibilityLabel("This is a favorite resort")
+                                    .foregroundStyle(.red)
+                                }
+                            }
                         }
                     }
                 }
@@ -89,4 +99,5 @@ struct SearchView: View {
 
 #Preview {
     SearchView()
+    
 }

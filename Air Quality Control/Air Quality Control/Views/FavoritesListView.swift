@@ -60,8 +60,22 @@ struct FavoritesListView: View {
                                 try await fetchAirQuality(city: city)
                             }
                         } label : {
-                            let state = city.state != nil ? ", \(city.state!)" : ""
-                            Text("\(city.name), \(city.country)\(state)")
+                            HStack {
+                                let state = city.state != nil ? ", \(city.state!)" : ""
+                                Text("\(city.name), \(city.country)\(state)")
+                                Spacer()
+                                Button {
+                                    if favorites.contains(city) {
+                                        favorites.remove(city)
+                                    } else {
+                                        favorites.add(city)
+                                    }
+                                } label: {
+                                    Image(systemName: favorites.contains(city) ? "heart.fill" : "heart")
+                                        .accessibilityLabel(favorites.contains(city) ? "Remove from favorites" : "Add to favorites")
+                                        .foregroundStyle(favorites.contains(city) ? .red : .gray)
+                                }
+                            }
                         }
                     }
                     .onDelete(perform: deleteCity)
