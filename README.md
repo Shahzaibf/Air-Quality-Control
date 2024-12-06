@@ -90,5 +90,5 @@ The app is structured to ensure separation of concerns and modularity:
 1. Sign up for a free API key at [OpenWeatherMap](https://openweathermap.org/).
 2. Add your API key to the project by updating the `apiKey` variable in the `AQIFetcher` file:
    ```swift
-   let apiKey = "YOUR_API_KEY"
+   let apiKey: String = "YOUR_API_KEY"
    ```

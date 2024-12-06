@@ -8,7 +8,7 @@
 import Foundation
 
 
-let apiKey: String = "lll"
+let apiKey: String = "YOUR_API_KEY"
 
 func fetchAQI(lat: Double, lon: Double) async throws -> AQIResponse {
     let endpoint = "https://api.openweathermap.org/data/2.5/air_pollution?lat=\(lat)&lon=\(lon)&appid=\(apiKey)"
