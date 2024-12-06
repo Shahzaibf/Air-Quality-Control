@@ -15,8 +15,7 @@ struct HomePageView: View {
     @State private var animate = false
     @State private var circleColor: Color = .gray
     @State private var tip: String = ""
-    @State private var favorites = FavoriteStore()
-    
+    @State private var colors: [Color] = [.white, .white, .white, .white, .white, .white, .white, .white]
     
     private func fetchAirQuality() async throws {
             print("FETCHING")
@@ -42,6 +41,15 @@ struct HomePageView: View {
             guard let aqi = AirQuality?.list.first?.main.aqi else { return }
             circleColor = colorForAQI(aqi: aqi)
             tip = tipForAQI(aqi: aqi)
+            let co = AirQuality?.list.first?.components.co ?? 0.0
+            let no = AirQuality?.list.first?.components.no ?? 0.0
+            let no2 = AirQuality?.list.first?.components.no2 ?? 0.0
+            let o3 = AirQuality?.list.first?.components.o3 ?? 0.0
+            let so2 = AirQuality?.list.first?.components.so2 ?? 0.0
+            let pm25 = AirQuality?.list.first?.components.pm25 ?? 0.0
+            let pm10 = AirQuality?.list.first?.components.pm10 ?? 0.0
+            let nh3 = AirQuality?.list.first?.components.nh3 ?? 0.0
+            colors = colorForComponents(co: co, no: no, no2: no2, o3: o3, so2: so2,pm25: pm25, pm10: pm10, nh3: nh3)
         }
     
     private func colorForAQI(aqi: Int) -> Color {
@@ -60,6 +68,20 @@ struct HomePageView: View {
                 return .white
             }
         }
+    
+    private func colorForComponents(co: Float, no: Float, no2: Float, o3: Float, so2: Float, pm25: Float, pm10: Float, nh3: Float) -> [Color] {
+        var colors: [Color] = Array(repeating: .clear, count: 8)
+        let coColor: Color = co <= 4.4 ? .green : co <= 9.4 ? .yellow : co <= 12.4 ? .orange : .red
+        let noColor: Color = no <= 53 ? .green : no <= 100 ? .yellow : no <= 360 ? .orange : .red
+        let no2Color: Color = no2 <= 53 ? .green : co <= 100 ? .yellow : co <= 360 ? .orange : .red
+        let o3Color: Color = o3 <= 54 ? .green : o3 <= 70 ? .yellow : o3 <= 85 ? .orange : .red
+        let so2Color: Color = so2 <= 35 ? .green : so2 <= 75 ? .yellow : so2 <= 185 ? .orange : .red
+        let pm25Color: Color = pm25 <= 12.0 ? .green : pm25 <= 35.4 ? .yellow : pm25 <= 55.4 ? .orange : .red
+        let pm10Color: Color = pm10 <= 54 ? .green : pm10 <= 154 ? .yellow : pm10 <= 254 ? .orange : .red
+        let nh3Color: Color = nh3 <= 100 ? .green : nh3 <= 200 ? .yellow : nh3 <= 500 ? .orange : .red
+        colors[0] = coColor; colors[1] = noColor; colors[2] = no2Color; colors[3] = o3Color; colors[4] = so2Color; colors[5] = pm25Color; colors[6] = pm10Color; colors[7] = nh3Color
+        return colors
+    }
     
     private func tipForAQI(aqi: Int) -> String {
             switch aqi {
@@ -119,14 +141,78 @@ struct HomePageView: View {
                         .lineLimit(nil)
                         .padding([.top, .leading, .trailing])
                     
-                    HStack {
-                        Text("\"co\": \(AirQuality?.list.first?.components.co ?? -1.0), \"no\": \(AirQuality?.list.first?.components.no ?? -1.0), \"no2\": \(AirQuality?.list.first?.components.no2 ?? -1.0), \"o3\": \(AirQuality?.list.first?.components.o3 ?? -1.0),\"so2\": \(AirQuality?.list.first?.components.so2 ?? -1.0), \"pm2_5\": \(AirQuality?.list.first?.components.pm25 ?? -1.0), \"pm10\": \(AirQuality?.list.first?.components.pm10 ?? -1.0), \"nh3\": \(AirQuality?.list.first?.components.nh3 ?? -1.0)")
+                    VStack {
+                        Text("Air Quality Components")
                             .font(
-                                .custom("Times New Roman", size: 16)
+                                .custom("Times New Roman", size: 24)
                             )
-                            .padding([.top, .bottom])
-                            .multilineTextAlignment(.center)
+                            .bold()
+                            .padding(.bottom, 10)
+
+                        Grid(alignment: .leading, horizontalSpacing: 20, verticalSpacing: 10) {
+                            GridRow {
+                                Text("Pollutant")
+                                    .font(.headline)
+                                    .foregroundColor(.gray)
+                                Text("Value")
+                                    .font(.headline)
+                                    .foregroundColor(.gray)
+                            }
+
+                            GridRow {
+                                Text("CO")
+                                Text("\(AirQuality?.list.first?.components.co ?? -1.0, specifier: "%.2f") ppm")
+                                    .foregroundColor(colors[0])
+                            }
+
+                            GridRow {
+                                Text("NO")
+                                Text("\(AirQuality?.list.first?.components.no ?? -1.0, specifier: "%.2f") ppm")
+                                    .foregroundColor(colors[1])
+                            }
+
+                            GridRow {
+                                Text("NO2")
+                                Text("\(AirQuality?.list.first?.components.no2 ?? -1.0, specifier: "%.2f") ppm")
+                                    .foregroundColor(colors[2])
+                            }
+
+                            GridRow {
+                                Text("O3")
+                                Text("\(AirQuality?.list.first?.components.o3 ?? -1.0, specifier: "%.2f") ppm")
+                                    .foregroundColor(colors[3])
+                            }
+
+                            GridRow {
+                                Text("SO2")
+                                Text("\(AirQuality?.list.first?.components.so2 ?? -1.0, specifier: "%.2f") ppm")
+                                    .foregroundColor(colors[4])
+                            }
+
+                            GridRow {
+                                Text("PM2.5")
+                                Text("\(AirQuality?.list.first?.components.pm25 ?? -1.0, specifier: "%.2f") µg/m³")
+                                    .foregroundColor(colors[5])
+                            }
+
+                            GridRow {
+                                Text("PM10")
+                                Text("\(AirQuality?.list.first?.components.pm10 ?? -1.0, specifier: "%.2f") µg/m³")
+                                    .foregroundColor(colors[6])
+                            }
+
+                            GridRow {
+                                Text("NH3")
+                                Text("\(AirQuality?.list.first?.components.nh3 ?? -1.0, specifier: "%.2f") ppm")
+                                    .foregroundColor(colors[7])
+                            }
+                        }
+                        .padding()
+                        .background(Color(.systemGray6))
+                        .cornerRadius(10)
+                        .shadow(radius: 5)
                     }
+                    .padding()
                     HStack {
                         Spacer()
                         NavigationLink(destination: InformationView()) {
@@ -138,29 +224,6 @@ struct HomePageView: View {
                         .padding([.top, .trailing])
                         .buttonStyle(PurpleButton())
                     }
-                    
-                    Text("Search for the aqi of different cities!")
-                        .font(
-                            .custom("Times New Roman", size: 20)
-                        )
-                        .padding(.bottom)
-                    VStack(alignment: .center) {
-                        
-                        NavigationLink(destination: SearchView()) {
-                            HStack {
-                                Text("Search")
-                            }
-                        }
-                        .buttonStyle(PurpleButton())
-                    }
-                    .padding(.bottom)
-                    NavigationLink(destination: FavoritesListView()) {
-                        Image(systemName: "star.fill")
-                            .font(.largeTitle)
-                            .foregroundColor(.yellow)
-                            .padding()
-                    }
-                    .buttonStyle(PlainButtonStyle())
                 }
                 .frame(maxWidth: .infinity)
                 .padding()
@@ -178,7 +241,7 @@ struct HomePageView: View {
                 }
             }
         }
-        .environment(favorites)
+        
     }
     
 }

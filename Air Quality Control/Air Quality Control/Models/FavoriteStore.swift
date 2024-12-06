@@ -12,7 +12,6 @@ import SwiftUI
 class FavoriteStore {
     @ObservationIgnored @AppStorage("Favories") private var favoritesData: String = ""
     private var cities: Set<City> = []
-    private let key = "Favorites"
     
     init() {
         load()

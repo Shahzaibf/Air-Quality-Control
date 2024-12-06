@@ -38,62 +38,70 @@ struct FavoritesListView: View {
     }
     
     var body: some View {
-        VStack {
-            if cities.isEmpty {
-                Text("Search some cities and add them to favorites!")
-                    .font(
-                        .custom("Times New Roman", size: 18)
-                    )
-                    .multilineTextAlignment(.center)
-                    .padding(.top)
-                Spacer()
-            } else {
-                Text("Favorites:")
-                    .font(
-                        .custom("Times New Roman", size: 18)
-                    )
-                List {
-                    ForEach(cities, id: \.self) { city in
-                        Button {
-                            currentCity = city
-                            Task {
-                                try await fetchAirQuality(city: city)
-                            }
-                        } label : {
-                            HStack {
-                                let state = city.state != nil ? ", \(city.state!)" : ""
-                                Text("\(city.name), \(city.country)\(state)")
-                                Spacer()
-                                Button {
-                                    if favorites.contains(city) {
-                                        favorites.remove(city)
-                                    } else {
-                                        favorites.add(city)
+        NavigationStack {
+            VStack {
+                if cities.isEmpty {
+                    Text("Search some cities and add them to favorites!")
+                        .font(
+                            .custom("Times New Roman", size: 18)
+                        )
+                        .multilineTextAlignment(.center)
+                        .padding(.top)
+                    Spacer()
+                } else {
+                    Text("Favorites:")
+                        .font(
+                            .custom("Times New Roman", size: 18)
+                        )
+                    List {
+                        ForEach(cities, id: \.self) { city in
+                            Button {
+                                currentCity = city
+                                Task {
+                                    try await fetchAirQuality(city: city)
+                                }
+                            } label : {
+                                HStack {
+                                    let state = city.state != nil ? ", \(city.state!)" : ""
+                                    Text("\(city.name), \(city.country)\(state)")
+                                    Spacer()
+                                    Button {
+                                        if favorites.contains(city) {
+                                            favorites.remove(city)
+                                        } else {
+                                            favorites.add(city)
+                                        }
+                                    } label: {
+                                        Image(systemName: favorites.contains(city) ? "heart.fill" : "heart")
+                                            .accessibilityLabel(favorites.contains(city) ? "Remove from favorites" : "Add to favorites")
+                                            .foregroundStyle(favorites.contains(city) ? .red : .gray)
                                     }
-                                } label: {
-                                    Image(systemName: favorites.contains(city) ? "heart.fill" : "heart")
-                                        .accessibilityLabel(favorites.contains(city) ? "Remove from favorites" : "Add to favorites")
-                                        .foregroundStyle(favorites.contains(city) ? .red : .gray)
                                 }
                             }
                         }
+                        .onDelete(perform: deleteCity)
                     }
-                    .onDelete(perform: deleteCity)
                 }
             }
-        }
-        .toolbar {
-            if !cities.isEmpty {
-                EditButton()
+            .toolbar {
+                if !cities.isEmpty {
+                    EditButton()
+                }
             }
+            .navigationBarBackButtonHidden(true) 
+            .onAppear() {
+                cities = favorites.allFavorites()
+            }
+            .navigationDestination(isPresented: $navigateToDetails) {
+                if let airQuality = AirQuality, let currCity = currentCity {
+                    CityView(airQuality: airQuality, currCity: currCity)
+                }
+            }
+            //        NavigationLink(destination: CityView(airQuality: AirQuality, currCity: currentCity ?? City.defaultCity), isActive: $navigateToDetails) {
+            //            EmptyView()
+            //        }
         }
-        .customBackButton()
-        .onAppear() {
-            cities = favorites.allFavorites()
-        }
-        NavigationLink(destination: CityView(airQuality: AirQuality, currCity: currentCity ?? City.defaultCity), isActive: $navigateToDetails) {
-            EmptyView()
-        }
+        
     }
 }
 
