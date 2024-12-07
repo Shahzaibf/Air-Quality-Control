@@ -68,7 +68,7 @@ The app is structured to ensure separation of concerns and modularity:
 
 1. Clone this repository to your local machine:
    ```bash
-   git clone https://github.com/your-repo/AirQualityControl.git
+   git clone https://github.com/Shahzaibf/Air-Quality-Control.git
    ```
 2. Open the project in Xcode.
 3. Install dependencies if any.
