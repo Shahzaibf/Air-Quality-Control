@@ -97,9 +97,6 @@ struct FavoritesListView: View {
                     CityView(airQuality: airQuality, currCity: currCity)
                 }
             }
-            //        NavigationLink(destination: CityView(airQuality: AirQuality, currCity: currentCity ?? City.defaultCity), isActive: $navigateToDetails) {
-            //            EmptyView()
-            //        }
         }
         
     }
