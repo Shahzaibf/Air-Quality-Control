@@ -87,8 +87,10 @@ struct SearchView: View {
                     }
                 }
             }
-            NavigationLink(destination: CityView(airQuality: AirQuality, currCity: currentCity ?? City.defaultCity), isActive: $navigateToDetails) {
-                EmptyView()
+            .navigationDestination(isPresented: $navigateToDetails) {
+                if let airQuality = AirQuality, let currCity = currentCity {
+                    CityView(airQuality: airQuality, currCity: currCity)
+                }
             }
         }
         .searchable(text: $searchText)
